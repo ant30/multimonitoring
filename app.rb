@@ -26,7 +26,8 @@ get '/proxy/:proxy' do
   port = request.port == 80  ? '' : ":#{request.port}"
   uri = "#{request.scheme}://#{request.host}#{port}/myip"
   uri = TESTING ? 'http://ip.jsontest.com' : uri
-  data = RestClient.get uri
+  request = RestClient::Resource.new(uri, :timeout => 2)
+  data = request.get
   pdata = JSON.parse data
 
   if pdata['ip'] == proxy_address
