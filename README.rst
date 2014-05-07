@@ -43,8 +43,9 @@ That request returns 200 OK with the proxy IP if the proxy ip fine.
 
 Otherwise:
 
-    If the IP is the same that proxy ip: returns 409
-    If ´PROXY_localhost´ variable doesn't exists, return 404
+- If the IP is the same that proxy ip: returns 409
+
+- If ´PROXY_localhost´ variable doesn't exists, return 404
 
 
 This service is going to use the the internal view /myip to test the proxy.
