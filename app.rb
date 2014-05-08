@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'rest_client'
 require 'json'
-require 'Digest'
+require 'digest'
 
 
 PROXY = {}
