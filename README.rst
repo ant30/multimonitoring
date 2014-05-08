@@ -52,3 +52,34 @@ This service is going to use the the internal view /myip to test the proxy.
 If you are using this server in localhost, you should set a property
 called TESTING=1 in your environment. Then, the service ip.jsontest.com will be
 used.
+
+
+Protected area
+==============
+
+If you want to protect the tests you can add a user and password. The
+application will be asking you by HTTP Auth Basic for a valid user when you
+access to it.
+
+This is made by environment.
+
+The password is a hexdigest of sha256. You can get it with:
+
+If you are in GNU based OS (linux):
+
+.. code-block::
+
+    echo -n 'yourpassword' | sha256sum
+
+If you are in OSX:
+
+.. code-block::
+
+   echo -n 'youpassword' | shasum -a 256
+
+
+Then, we need to add a user:
+
+.. code-block::
+
+   export HTTP_USER='youruser:yourpasswordhash'
