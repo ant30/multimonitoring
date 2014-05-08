@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'newrelic_rpm'
 require 'rest_client'
 require 'json'
 require 'digest'

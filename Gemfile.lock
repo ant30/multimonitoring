@@ -12,6 +12,7 @@ GEM
   specs:
     json (1.8.1)
     mime-types (2.2)
+    newrelic_rpm (3.8.0.218)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -24,5 +25,6 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  newrelic_rpm
   rest-client
   sinatra!
