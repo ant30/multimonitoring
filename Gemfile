@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'sinatra'
+gem 'sinatra', :github => "sinatra/sinatra"
 
 # other dependencies
 gem 'rest-client'
