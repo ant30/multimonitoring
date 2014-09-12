@@ -1,8 +1,11 @@
 source 'https://rubygems.org'
-gem 'sinatra', :github => "sinatra/sinatra"
+gem 'sinatra'
 
 # other dependencies
 gem 'rest-client'
 gem 'json'
 
 gem 'newrelic_rpm'
+
+# Heroku taks
+gem 'heroku-api'

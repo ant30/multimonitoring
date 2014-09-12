@@ -4,6 +4,8 @@ Project using Sinatra to tests services availability
 
 If this project isn't useful for you, use other. Don't bother me.
 
+This project have some heroku tasks that can be executed on heroku sheduler
+environment.
 
 Deployment
 ==========
@@ -83,3 +85,29 @@ Then, we need to add a user:
 .. code-block::
 
    export HTTP_USER='youruser:yourpasswordhash'
+
+
+Heroku Tasks
+============
+
+You can find instructions to enable heroku scheduler addon and how to use it
+in https://devcenter.heroku.com/articles/scheduler
+
+
+Heroku app restart
+++++++++++++++++++
+
+.. code-block::
+
+   rake heroku:restart_app[$APP_NAME]
+
+
+You really don't want this task, but sometimes you need to restart your app
+process every night or similar. This task is aimed to that, that is restart the
+app.
+
+You need to define the environment var HEROKU_API_TOKEN. If you don't know how
+to get that value, you can access to the follow link in the heroku api docs.
+
+https://devcenter.heroku.com/articles/authentication#retrieving-the-api-token
+
