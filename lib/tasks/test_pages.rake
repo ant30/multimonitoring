@@ -21,7 +21,7 @@ namespace :test_pages do
           method: :get,
           url: url,
           headers: {user_agent: 'Multimonitoring Testing'},
-          timeout: 2,
+          timeout: ENV['TIMEOUT'] || 2,
           open_timeout: 2
         )
       rescue
