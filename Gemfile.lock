@@ -15,9 +15,13 @@ GEM
       excon (~> 0.38)
       multi_json (~> 1.8)
     json (1.8.1)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
     mime-types (2.2)
     multi_json (1.10.1)
     newrelic_rpm (3.8.0.218)
+    pony (1.11)
+      mail (>= 2.0)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -32,5 +36,6 @@ DEPENDENCIES
   heroku-api
   json
   newrelic_rpm
+  pony
   rest-client
   sinatra!
