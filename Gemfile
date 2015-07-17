@@ -9,3 +9,9 @@ gem 'newrelic_rpm'
 
 # Heroku taks
 gem 'heroku-api'
+
+# email functionlity
+gem 'pony'
+#worker functionality
+gem 'sidekiq'
+gem 'redis'

@@ -20,9 +20,8 @@ You can launch the service with foreman or with directly with ruby:
 
 .. code-block:: bash
 
-   bundle exec ruby app.rb
+   bundle exec rackup config.ru
 
-Run bundle to install requirements
 
 Proxy status
 ============
@@ -111,3 +110,11 @@ to get that value, you can access to the follow link in the heroku api docs.
 
 https://devcenter.heroku.com/articles/authentication#retrieving-the-api-token
 
+URL Monitoring
+==============
+
+Testing urls
+++++++++++++
+
+It will make call to the url with a time in betweem, if there is more than two
+error it will send an email with the url and the error code
