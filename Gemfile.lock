@@ -10,20 +10,39 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    celluloid (0.16.0)
+      timers (~> 4.0.0)
+    connection_pool (2.2.0)
     excon (0.39.5)
     heroku-api (0.3.19)
       excon (~> 0.38)
       multi_json (~> 1.8)
+    hitimes (1.2.2)
     json (1.8.1)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
     mime-types (2.2)
     multi_json (1.10.1)
     newrelic_rpm (3.8.0.218)
+    pony (1.11)
+      mail (>= 2.0)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
+    redis (3.2.1)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    sidekiq (3.4.2)
+      celluloid (~> 0.16.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      json (~> 1.0)
+      redis (~> 3.2, >= 3.2.1)
+      redis-namespace (~> 1.5, >= 1.5.2)
     tilt (2.0.1)
+    timers (4.0.1)
+      hitimes
 
 PLATFORMS
   ruby
@@ -32,5 +51,8 @@ DEPENDENCIES
   heroku-api
   json
   newrelic_rpm
+  pony
+  redis
   rest-client
+  sidekiq
   sinatra!
