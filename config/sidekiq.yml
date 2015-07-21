@@ -1,0 +1,6 @@
+---
+:concurrency: 5
+:pool: 2
+:pidfile: sidekiq.pid
+:queues:
+  - default
