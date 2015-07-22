@@ -1,0 +1,17 @@
+# SOURCE_APP:
+#    VARIABLE_NAME:
+#       TARGET_APP: ENV_VAR_NAME_IN_TARGET_APP
+#       TARGET_APP2: ENV_VAR_NAME_IN_TARGET_APP2
+
+cms:
+  DATABASE_URL:
+    usermanager: CMS_DATABASE_URL
+
+usermanager:
+  REDIS_URI:
+    cms: REDIS_SESSION_URI
+
+mailer:
+  API_KEY:
+    usermanager: MAILER_API_KEY
+    cms: MAILER_API_KEY

@@ -6,10 +6,8 @@ class CustomMail
     @from = ENV['EMAIL_FROM']
     @to = ENV['EMAIL_TO']
     @subject_prefix = "#{ENV['EMAIL_SUBJECT_PREFIX']}"
-    @via = :smtp
     @address = ENV['MAILGUN_SMTP_SERVER']
     @port = ENV['MAILGUN_SMTP_PORT']
-    @enable_starttls_auto = true
     @user_name = ENV['MAILGUN_SMTP_LOGIN']
     @password = ENV['MAILGUN_SMTP_PASSWORD']
     @authentication = :login
@@ -32,16 +30,16 @@ class CustomMail
       to: @to,
       subject: "#{@subject_prefix} - #{subject}",
       body: body,
-      via: @via,
+      via: :smtp,
       via_options: {
           :address => @address,
           :port => @port,
-          :enable_starttls_auto => @enable_starttls_auto,
+          :enable_starttls_auto => true,
           :user_name => @user_name,
           :password => @password,
           :authentication => @authentication,
           :domain => @domain
       }
-    }).send
+    })
   end
 end
