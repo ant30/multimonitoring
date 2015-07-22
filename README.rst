@@ -110,6 +110,93 @@ to get that value, you can access to the follow link in the heroku api docs.
 
 https://devcenter.heroku.com/articles/authentication#retrieving-the-api-token
 
+
+Heroku shared env vars monitoring
++++++++++++++++++++++++++++++++++
+
+If you use heroku and microservices architecture I'm sure you are suffering
+when heroku addons env vars changed. Heroku sharing can help with this problem,
+but not all addons providers allow Heroku sharing. For instance, This is the
+case for OpenRedis addon.
+
+This task help you to keep in sync the vars values. You need logentries or
+something that allows you to send a "get" or "post" to a uri when your app is
+start. When the your app start and the webhook is called, then a Job is going
+to review shared env vars with the restarted app using values from a yaml
+config file.
+
+
+Available actions
+-----------------
+
+1. Send an email if values are differente (a email digest).
+
+  .. code-block:
+
+     HEROKU_SHARED_ENV_EMAIL_REPORT=true
+
+2. Fix variable value if it changed.
+
+  .. code-block:
+
+     HEROKU_SHARED_ENV_PROPAGE_CHANGES=true
+
+
+
+Available tasks
+---------------
+
+
+1. Review one app
+
+  .. code-block::
+
+     rake heroku:review_shared_env_app[$APP_NAME]
+
+
+2. Review all apps in yaml file
+
+  .. code-block::
+
+     rake heroku:review_shared_env_all_apps
+
+
+Webhook endpoint
+----------------
+
+not auth required
+
+.. code-block::
+
+   GET https://yourdomain.tld/hooks/review_env_vars/:app
+
+   POST https://yourdomain.tld/hooks/review_env_vars/:app
+
+The service always reply with status 201 and the same json.
+
+
+Yaml file
+---------
+
+The yaml file should be accesible by a public url. That url is set in the
+environment variable: **HEROKU_SHARED_ENV_FILE**
+
+The file structure is as follow:
+
+.. code-block::
+
+   source_app_name:
+     source_env_var_name:
+        target_app: env_var_name
+        target_app2: another_var_name
+        target_app: env_var_name
+
+   another_source_app:
+     other_source_env_var_name:
+        target_app: other_env_var_name
+
+
+
 URL Monitoring
 ==============
 
@@ -117,4 +204,33 @@ Testing urls
 ++++++++++++
 
 It will make call to the url with a time in betweem, if there is more than two
-error it will send an email with the url and the error code
+error it will send an email with the url and the error code.
+
+The url are taken from a url accesible by a public url. One line per url. The
+environment variable pointint to remote file is: **URL_TO_TESTED_URLS**
+
+Available env variables:
+
+.. code-block::
+
+   TIMEOUT:                     5
+   TIME_BEFORE_JOB:             2
+   TIME_BETWEEN_DIFFERENT_URL:  1
+   TIME_BETWEEN_SAME_URL:       60
+   FAILURE_LOOP_COUNT:          5
+
+
+
+Email Settings
+==============
+
+.. code-block::
+
+   MAILGUN_SMTP_LOGIN:          a_smtp_user
+   MAILGUN_SMTP_PASSWORD:       a_smtp_password
+   MAILGUN_SMTP_PORT:           587
+   MAILGUN_SMTP_SERVER:         a_smtp_server
+   EMAIL_DOMAIN:                example.com
+   EMAIL_FROM:                  no-reply@example.com
+   EMAIL_SUBJECT_PREFIX:        [MONITORING]
+   EMAIL_TO:                    someone@example.com

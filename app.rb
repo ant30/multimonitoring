@@ -4,6 +4,8 @@ require 'rest_client'
 require 'json'
 require 'digest'
 
+require './app/workers/heroku_shared_env_job'
+
 
 PROXY = {}
 
@@ -25,15 +27,14 @@ class Protected < Sinatra::Base
       username == stored_user && password_hash.hexdigest == stored_password
     end
   end
-  
-  
+
   get '/proxy/:proxy' do
-  
+
     unless PROXY.has_key?(params[:proxy])
       response.status = 404
       return "404: proxy not found"
     end
-  
+
     proxy = PROXY[params[:proxy]]
     proxy_address = Resolv.getaddress(URI(proxy).host)
     RestClient.proxy = proxy
@@ -43,7 +44,7 @@ class Protected < Sinatra::Base
     request = RestClient::Resource.new(uri, :timeout => 2, :open_timeout => 2)
     data = request.get
     pdata = JSON.parse data
-  
+
     if pdata['ip'] == proxy_address
       "OK: #{pdata['ip']}"
     else
@@ -58,8 +59,24 @@ class Protected < Sinatra::Base
 end
 
 class Public < Sinatra::Base
+
   get '/myip' do
     content_type :json
     { :ip => request.ip }.to_json
   end
+
+  get '/hooks/review_env_vars/:app' do
+    HerokuSharedEnvJob.perform_async(params[:app])
+    content_type :json
+    status 201
+    { :status => 'accepted' }.to_json
+  end
+
+  post '/hooks/review_env_vars/:app' do
+    HerokuSharedEnvJob.perform_async(params[:app])
+    content_type :json
+    status 201
+    { :status => 'accepted' }.to_json
+  end
+
 end
