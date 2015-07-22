@@ -72,4 +72,11 @@ class Public < Sinatra::Base
     { :status => 'accepted' }.to_json
   end
 
+  post '/hooks/review_env_vars/:app' do
+    HerokuSharedEnvJob.perform_async(params[:app])
+    content_type :json
+    status 201
+    { :status => 'accepted' }.to_json
+  end
+
 end
