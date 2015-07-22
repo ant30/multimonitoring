@@ -50,7 +50,7 @@ class HerokuEnvReview
       if var_value != get_app_env_var(target_app, target_var_name)
         message =  "ENV VAR #{message_action}: Value for #{target_var_name} in #{target_app} is not equal to #{env_var} in #{app}"
         @heroku.put_config_vars(target_app, target_var_name => var_value) if @propagate_change
-        @log.alert message
+        @log.warn message
         message
       end
     end.select { |item| item != nil }
