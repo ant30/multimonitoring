@@ -11,7 +11,7 @@ class HerokuEnvReview
   def initialize
     @heroku = Heroku::API.new(:api_key => ENV['HEROKU_API_KEY'])
     @email_report = ENV['HEROKU_SHARED_ENV_EMAIL_REPORT'] == 'true'
-    @propagate_change = ENV['HEROKU_SHARED_ENV_PROPAGE_CHANGES'] == 'true'
+    @propagate_change = ENV['HEROKU_SHARED_ENV_PROPAGATE_CHANGES'] == 'true'
     @settings = get_settings
     @log = Logger.new(STDOUT)
   end
@@ -37,7 +37,7 @@ class HerokuEnvReview
       if resp.code == 200
         resp
       else
-        raise "[ERROR] Failed to load the remote file heroku env config. Response status: #{response.code}"
+        raise "[ERROR] Failed to load the remote file heroku env config. Response status: #{resp.code}"
       end
     end
     YAML.load(response.body)
@@ -47,6 +47,7 @@ class HerokuEnvReview
     var_value = get_app_env_var(app, env_var)
     message_action = @propagate_change ? "CHANGED" : "ALERT"
     @settings[app][env_var].map do |target_app, target_var_name|
+      @log.debug "Reviewing env var #{env_var} shared to #{target_app}"
       if var_value != get_app_env_var(target_app, target_var_name)
         message =  "ENV VAR #{message_action}: Value for #{target_var_name} in #{target_app} is not equal to #{env_var} in #{app}"
         @heroku.put_config_vars(target_app, target_var_name => var_value) if @propagate_change

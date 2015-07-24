@@ -139,7 +139,7 @@ Available actions
 
   .. code-block:
 
-     HEROKU_SHARED_ENV_PROPAGE_CHANGES=true
+     HEROKU_SHARED_ENV_PROPAGATE_CHANGES=true
 
 
 
