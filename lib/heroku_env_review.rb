@@ -24,6 +24,11 @@ class HerokuEnvReview
     send_report(report) if @email_report
   end
 
+  def review_all_apps_dryrun
+    @email_report = false
+    @propagate_change = false
+    review_all_apps
+  end
 
   def review_app_shared_env_vars(app)
     report = review_app(app)

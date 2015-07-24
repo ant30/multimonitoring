@@ -161,6 +161,13 @@ Available tasks
      rake heroku:review_shared_env_all_apps
 
 
+3. Review all apps in dryrun mode (no email, no var changes)
+
+  .. code-block::
+
+     rake heroku:review_shared_env_all_apps_dryrun
+
+
 Webhook endpoint
 ----------------
 

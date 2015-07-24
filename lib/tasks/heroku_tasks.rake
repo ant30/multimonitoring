@@ -34,4 +34,13 @@ namespace :heroku do
     reviewer = HerokuEnvReview.new
     reviewer.review_all_apps
   end
+
+  desc "Review shared env vars for all heroku apps in config file without notifications or action"
+  task :review_shared_env_all_apps_dryrun do
+    abort("Please, set env var HEROKU_API_KEY properly") if ENV['HEROKU_API_KEY'] == nil
+    abort("Please, set env var HEROKU_SHARED_ENV_FILE properly") if ENV['HEROKU_SHARED_ENV_FILE'] == nil
+
+    reviewer = HerokuEnvReview.new
+    reviewer.review_all_apps_dryrun
+  end
 end
