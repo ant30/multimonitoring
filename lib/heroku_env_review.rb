@@ -20,8 +20,8 @@ class HerokuEnvReview
     report = @settings.map do |app, _|
       @log.info "Reviewing env vars shared from #{app}"
       review_app(app)
-    end.select { |item| item != nil }
-    send_report(report) if @email_report
+    end.select { |item| !item.nil? and !item.emtpy?}
+    send_report(report) if @email_report && !report.empty?
   end
 
   def review_all_apps_dryrun
@@ -32,7 +32,7 @@ class HerokuEnvReview
 
   def review_app_shared_env_vars(app)
     report = review_app(app)
-    send_report(report) if @email_report
+    send_report(report) if @email_report && !report.empty?
   end
 
   private
@@ -58,6 +58,8 @@ class HerokuEnvReview
         @heroku.put_config_vars(target_app, target_var_name => var_value) if @propagate_change
         @log.warn message
         message
+      else
+        nil
       end
     end.select { |item| item != nil }
   end
@@ -66,7 +68,7 @@ class HerokuEnvReview
     @settings[app].map do |env_var, _|
       @log.info "Reviewing env var #{env_var} for #{app}"
       review_env_var(app, env_var)
-    end.select { |item| item != nil }
+    end.select { |item| !item.nil? && !item.empty? }
   end
 
   def get_app_env_var(app, env_var)

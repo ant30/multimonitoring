@@ -175,9 +175,9 @@ not auth required
 
 .. code-block::
 
-   GET https://yourdomain.tld/public/hooks/review_env_vars/:app
+   GET https://yourdomain.tld/public/hooks/review_env_vars/{app_name}
 
-   POST https://yourdomain.tld/public/hooks/review_env_vars/:app
+   POST https://yourdomain.tld/public/hooks/review_env_vars/{app_name}
 
 The service always reply with status 201 and the same json.
 
